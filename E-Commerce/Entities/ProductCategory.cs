@@ -1,8 +1,7 @@
 ﻿namespace ECommerce
 {
-    public class ProductCategory
+    public class ProductCategory:BaseEntity
     {
-        public Guid Id { get; set; }
 
         public Guid ProductId { get; set; }
         public Product Product { get; set; }

@@ -1,23 +1,29 @@
+using AutoMapper;
 using ECommerce;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-
+var mapperConfiguration = new MapperConfiguration(cfg =>
+            {
+                cfg.CreateMap<Product, ProductViewModel>().ReverseMap();
+                cfg.CreateMap<Category,CategoryViewModel>().ReverseMap();
+            });
+            var mapper = new Mapper(mapperConfiguration);
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
 {
     options
-        .UseSqlServer(connectionString, builder => builder.MigrationsAssembly(typeof(Program).Assembly.FullName))
+        .UseMySql(connectionString, ServerVersion.AutoDetect(connectionString))
         .EnableDetailedErrors()
         .EnableSensitiveDataLogging()
         .UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
 });
 
-
-builder.Services.AddScoped<IProductRepository, ProductRepository>();
-builder.Services.AddScoped<IProductUnitOfWork, ProductUnitOfWork>();
+builder.Services.AddSingleton<IMapper>(mapper);
+builder.Services.AddScoped<BaseRepo<Product>, ProductRepository>();
+builder.Services.AddScoped<BaseUnitOfWork<Product>, ProductUnitOfWork>();
 
 
 
