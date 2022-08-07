@@ -3,13 +3,17 @@
 namespace ECommerce
 {
     using AutoMapper;
+    using FluentValidation;
     using Microsoft.AspNetCore.Mvc;
 
     [Route("api/[controller]")]
     [ApiController]
-    public class ProductsController : BaseController<Product,ProductViewModel>
+    public class ProductsController : BaseController<Product, ProductViewModel>
     {
-        public ProductsController(BaseUnitOfWork<Product> productUnitOfWork,IMapper mapper):base(productUnitOfWork,mapper)
+        public ProductsController(BaseUnitOfWork<Product> productUnitOfWork,
+            IMapper mapper,
+            AbstractValidator<ProductViewModel> validator)
+            : base(productUnitOfWork, mapper, validator)
         {
         }
     }

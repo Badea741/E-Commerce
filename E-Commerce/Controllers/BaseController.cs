@@ -3,19 +3,25 @@
 namespace ECommerce
 {
     using AutoMapper;
+    using FluentValidation;
+    using FluentValidation.Results;
     using Microsoft.AspNetCore.Mvc;
 
     [ApiController, Route("api/[controller]")]
-    public class BaseController<TEntity,TViewModel> :ControllerBase 
-    where TEntity :class 
-    where TViewModel :class
+    public class BaseController<TEntity, TViewModel> : ControllerBase
+    where TEntity : class
+    where TViewModel : class
     {
         protected readonly BaseUnitOfWork<TEntity> _unitOfWork;
 
         protected IMapper _mapper;
-        public BaseController(BaseUnitOfWork<TEntity> unitOfWork,IMapper mapper){
-            _unitOfWork=unitOfWork;
-            _mapper=mapper;
+        private readonly AbstractValidator<TViewModel> _validator;
+
+        public BaseController(BaseUnitOfWork<TEntity> unitOfWork, IMapper mapper, AbstractValidator<TViewModel> validator)
+        {
+            _unitOfWork = unitOfWork;
+            _mapper = mapper;
+            _validator = validator;
         }
         // DELETE api/<ProductsController>/5
         [HttpDelete("{id}")]
@@ -32,7 +38,6 @@ namespace ECommerce
         {
             List<TEntity> entities = await _unitOfWork.ReadAllAsync();
             return Ok(entities.Select(product => _mapper.Map<TViewModel>(product)));
-            // return Ok(entities);
         }
 
         // GET api/<ProductsController>/5
@@ -42,21 +47,22 @@ namespace ECommerce
             TEntity entity = await _unitOfWork.ReadByIdAsync(id);
             TViewModel entityViewModel = _mapper.Map<TViewModel>(entity);
 
-            // FluentValidation.Results.ValidationResult validationResult = await new ProductValidator().ValidateAsync(productViewModel);
-
-            // if (!validationResult.IsValid)
-            //     return BadRequest(new { errors = validationResult.Errors });
-
             return Ok(entityViewModel);
         }
 
         // POST api/<ProductsController>
         [HttpPost]
-        public virtual async Task<IActionResult> Post([FromBody] TEntity entity)
+        public virtual async Task<IActionResult> Post([FromBody] TViewModel entityViewModel)
         {
+            TEntity entity = _mapper.Map<TEntity>(entityViewModel);
+
+            ValidationResult result = await _validator.ValidateAsync(entityViewModel);
+            if (!result.IsValid)
+                return BadRequest(result.Errors.Select(e => e.ErrorMessage));
+        
             entity = await _unitOfWork.CreateAsync(entity);
             await _unitOfWork.SaveAsync();
-            return CreatedAtAction(nameof(Post), new { id = entity.GetType().ToString() }, entity);
+            return CreatedAtAction(nameof(Post), new { id = entityViewModel.GetType().ToString() }, entityViewModel);
         }
 
         // PUT api/<ProductsController>/5
