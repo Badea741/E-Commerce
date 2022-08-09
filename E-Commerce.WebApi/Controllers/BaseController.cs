@@ -93,7 +93,7 @@ namespace ECommerce
             ValidationResult result = await _validator.ValidateAsync(entity);
             if (!result.IsValid)
                 return BadRequest(result.Errors.Select(e => e.ErrorMessage));
-                
+
             entity = await _unitOfWork.CreateAsync(entity);
             try
             {
@@ -116,7 +116,14 @@ namespace ECommerce
                     return Unauthorized("User not authorized");
             }
             entity = _unitOfWork.Update(entity);
-            await _unitOfWork.SaveAsync();
+            try
+            {
+                await _unitOfWork.SaveAsync();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.InnerException.Message);
+            }
 
             return Ok(_mapper.Map<TViewModel>(entity));
         }

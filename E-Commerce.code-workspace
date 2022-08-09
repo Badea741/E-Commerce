@@ -4,22 +4,28 @@
 			"path": "."
 		},
 		{
-			"path": "E-Commerce/Entities"
+			"path": "E-Commerce.Shared/Entities"
 		},
 		{
-			"path": "E-Commerce/Repositories"
+			"path": "E-Commerce.Shared/Helpers"
 		},
 		{
-			"path": "E-Commerce/UnitsOfWork"
+			"path": "E-Commerce.Shared/Validators"
 		},
 		{
-			"path": "E-Commerce/ViewModels"
+			"path": "E-Commerce.Shared/ViewModels"
 		},
 		{
-			"path": "E-Commerce/Entities/Configurations"
+			"path": "E-Commerce.WebApi/Constants"
 		},
 		{
-			"path": "E-Commerce/Controllers"
+			"path": "E-Commerce.WebApi/Controllers"
+		},
+		{
+			"path": "E-Commerce.WebApi/Repositories"
+		},
+		{
+			"path": "E-Commerce.WebApi/UnitsOfWork"
 		}
 	],
 	"settings": {}

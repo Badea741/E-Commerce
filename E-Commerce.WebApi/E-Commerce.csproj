@@ -20,6 +20,7 @@
     </PackageReference>
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
     <PackageReference Include="Swashbuckle.AspNetCore.Filters" Version="7.0.0" />
+    <ProjectReference Include="../E-Commerce.Shared/E-Commerce.Shared.csproj"/>
 
   </ItemGroup>
 
