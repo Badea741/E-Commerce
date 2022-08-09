@@ -12,7 +12,7 @@ namespace ECommerce
     {
         public ProductsController(BaseUnitOfWork<Product> productUnitOfWork,
             IMapper mapper,
-            AbstractValidator<ProductViewModel> validator)
+            AbstractValidator<Product> validator)
             : base(productUnitOfWork, mapper, validator)
         {
         }

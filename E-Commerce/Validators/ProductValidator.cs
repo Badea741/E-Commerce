@@ -2,7 +2,7 @@
 {
     using FluentValidation;
 
-    public class ProductValidator : AbstractValidator<ProductViewModel>
+    public class ProductValidator : AbstractValidator<Product>
     {
         public ProductValidator()
         {

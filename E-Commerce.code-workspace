@@ -1,0 +1,26 @@
+{
+	"folders": [
+		{
+			"path": "."
+		},
+		{
+			"path": "E-Commerce/Entities"
+		},
+		{
+			"path": "E-Commerce/Repositories"
+		},
+		{
+			"path": "E-Commerce/UnitsOfWork"
+		},
+		{
+			"path": "E-Commerce/ViewModels"
+		},
+		{
+			"path": "E-Commerce/Entities/Configurations"
+		},
+		{
+			"path": "E-Commerce/Controllers"
+		}
+	],
+	"settings": {}
+}

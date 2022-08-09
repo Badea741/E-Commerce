@@ -3,6 +3,7 @@ using System;
 using ECommerce;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ECommerce.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220808142452_addedRequiredFields")]
+    partial class addedRequiredFields
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -53,18 +55,6 @@ namespace ECommerce.Migrations
                         .IsUnique();
 
                     b.ToTable("Admin");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("d226b8fb-aead-4f2e-8cd7-b9536b550b79"),
-                            Address = "Address",
-                            Age = 22,
-                            Name = "Muhammad",
-                            PasswordHash = "473287F8298DBA7163A897908958F7C0EAE733E25D2E027992EA2EDC9BED2FA8",
-                            PhoneNumber = "2351234512",
-                            Username = "admin"
-                        });
                 });
 
             modelBuilder.Entity("ECommerce.Category", b =>
@@ -193,18 +183,6 @@ namespace ECommerce.Migrations
                         .IsUnique();
 
                     b.ToTable("User");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("1777d9e4-e78f-4ba4-b3cc-8df26f145d59"),
-                            Address = "Address",
-                            Age = 22,
-                            Name = "Muhammad",
-                            PasswordHash = "473287F8298DBA7163A897908958F7C0EAE733E25D2E027992EA2EDC9BED2FA8",
-                            PhoneNumber = "2351234512",
-                            Username = "user"
-                        });
                 });
 
             modelBuilder.Entity("ECommerce.ProductCategory", b =>
